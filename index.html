@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Stock Investment Sites</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --border: #ececec;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --accent: #fbbf24;      /* yellow-400 */
+    --accent-dark: #f59e0b; /* amber-500 */
+    --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.05);
+    --shadow-hover: 0 2px 4px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  header {
+    margin-bottom: 40px;
+  }
+
+  .header-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+
+  .logo-star {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .search-wrap {
+    margin-top: 24px;
+    position: relative;
+  }
+
+  .search {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--card);
+    color: var(--text);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .search:focus {
+    outline: none;
+    border-color: var(--accent-dark);
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.15);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: var(--muted);
+    pointer-events: none;
+  }
+
+  .category {
+    margin-top: 40px;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .category-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .category-count {
+    font-size: 12px;
+    color: var(--muted);
+    background: #f3f4f6;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .site-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    box-shadow: var(--shadow);
+  }
+
+  .site-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    border-color: #e0e0e0;
+  }
+
+  .site-card:active {
+    transform: translateY(0);
+  }
+
+  .star {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    color: var(--accent);
+    filter: drop-shadow(0 1px 1px rgba(245, 158, 11, 0.2));
+  }
+
+  .site-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .site-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .site-desc {
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--muted);
+    font-size: 14px;
+    display: none;
+  }
+
+  footer {
+    margin-top: 60px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  @media (max-width: 640px) {
+    .container { padding: 32px 16px 60px; }
+    h1 { font-size: 22px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-row">
+        <svg class="logo-star" viewBox="0 0 24 24" fill="#fbbf24" stroke="#f59e0b" stroke-width="0.5" stroke-linejoin="round">
+          <path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.2L2 10l7.1-1.1z"/>
+        </svg>
+        <h1>My Stock Investment Sites</h1>
+      </div>
+      <p class="subtitle">주식 투자에 필요한 사이트 모음</p>
+
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" class="search" id="searchInput" placeholder="사이트 이름 또는 설명 검색…" />
+      </div>
+    </header>
+
+    <main id="sitesContainer">
+      <!-- Categories rendered by JS -->
+    </main>
+
+    <div class="empty-state" id="emptyState">검색 결과가 없습니다.</div>
+
+    <footer>
+      <p>Last updated: <span id="lastUpdated"></span></p>
+    </footer>
+  </div>
+
+<script>
+  // ====== 사이트 데이터 ======
+  // 카테고리별로 사이트를 추가/제거할 때는 이 배열만 수정하면 됩니다.
+  const categories = [
+    {
+      name: "산업 · 테크 뉴스",
+      sites: [
+        { name: "전자신문 (ETNews)", desc: "IT·전자·산업 전문 미디어", url: "https://www.etnews.com" }
+      ]
+    }
+  ];
+
+  // ====== 렌더링 ======
+  const starSVG = `
+    <svg class="star" viewBox="0 0 24 24" fill="currentColor" stroke="#f59e0b" stroke-width="0.5" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.2L2 10l7.1-1.1z"/>
+    </svg>
+  `;
+
+  function renderCategories(filter = "") {
+    const container = document.getElementById("sitesContainer");
+    const emptyState = document.getElementById("emptyState");
+    container.innerHTML = "";
+    const q = filter.trim().toLowerCase();
+    let totalShown = 0;
+
+    categories.forEach(cat => {
+      const filtered = cat.sites.filter(s =>
+        !q || s.name.toLowerCase().includes(q) || (s.desc || "").toLowerCase().includes(q)
+      );
+      if (filtered.length === 0) return;
+
+      const section = document.createElement("section");
+      section.className = "category";
+
+      const header = document.createElement("div");
+      header.className = "category-header";
+      header.innerHTML = `
+        <h2 class="category-title">${cat.name}</h2>
+        <span class="category-count">${filtered.length}</span>
+      `;
+
+      const grid = document.createElement("div");
+      grid.className = "grid";
+
+      filtered.forEach(site => {
+        const a = document.createElement("a");
+        a.className = "site-card";
+        a.href = site.url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.innerHTML = `
+          ${starSVG}
+          <div class="site-info">
+            <span class="site-name">${site.name}</span>
+            ${site.desc ? `<span class="site-desc">${site.desc}</span>` : ""}
+          </div>
+        `;
+        grid.appendChild(a);
+      });
+
+      section.appendChild(header);
+      section.appendChild(grid);
+      container.appendChild(section);
+      totalShown += filtered.length;
+    });
+
+    emptyState.style.display = totalShown === 0 ? "block" : "none";
+  }
+
+  // 검색
+  document.getElementById("searchInput").addEventListener("input", (e) => {
+    renderCategories(e.target.value);
+  });
+
+  // 마지막 업데이트 날짜
+  const today = new Date();
+  document.getElementById("lastUpdated").textContent =
+    today.toISOString().slice(0, 10);
+
+  renderCategories();
+</script>
+</body>
+</html>
