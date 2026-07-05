@@ -366,7 +366,7 @@
         const a = document.createElement("a");
         a.className = "site-card";
         a.href = site.url;
-        a.target = "_blank";
+        a.target = (window.self === window.top) ? "_blank" : "_top"; // 임베드 시 같은 창에서 열어 뒤로가기 체인 유지
         a.rel = "noopener noreferrer";
         // icon이 있으면 이모지, 없으면 기본 노랑별 SVG로 fallback
         const iconHTML = site.icon
